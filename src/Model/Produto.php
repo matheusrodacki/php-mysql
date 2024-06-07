@@ -3,12 +3,12 @@
 class Produto
 {
   // Propriedades da classe Produto
-  private $id;
-  private $tipo;
-  private $nome;
-  private $descricao;
-  private $imagem;
-  private $preco;
+  private  int $id;
+  private string $tipo;
+  private string $nome;
+  private string $descricao;
+  private string $imagem;
+  private float $preco;
 
   // Construtor da classe Produto
   public function __construct($id, $tipo, $nome, $descricao, $imagem, $preco)

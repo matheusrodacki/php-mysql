@@ -1,15 +1,37 @@
 <?php
 
 require_once 'src/conexao-bd.php';
+require_once 'src/Model/Produto.php';
 
 $sql1 = "SELECT * FROM produtos WHERE tipo = 'Cafe' ORDER BY preco";
 $stmt = $pdo->query($sql1);
-$produtoCafe = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$produtosCafe = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+$dadosCafe = array_map(function ($cafe) {
+  return new Produto(
+    (int) $cafe['id'],
+    $cafe['tipo'],
+    $cafe['nome'],
+    $cafe['descricao'],
+    $cafe['imagem'],
+    (float) $cafe['preco']
+  );
+}, $produtosCafe);
 
 $sql2 = "SELECT * FROM produtos WHERE tipo = 'Almoço' ORDER BY preco";
 $stmt = $pdo->query($sql2);
-$produtosAlmoco =  $stmt->fetchAll(PDO::FETCH_ASSOC);;
+$produtosAlmoco =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$dadosAlmoco = array_map(function ($almoco) {
+  return new Produto(
+    (int) $almoco['id'],
+    $almoco['tipo'],
+    $almoco['nome'],
+    $almoco['descricao'],
+    $almoco['imagem'],
+    (float) $almoco['preco']
+  );
+}, $produtosAlmoco);
 
 ?>
 
@@ -45,15 +67,15 @@ $produtosAlmoco =  $stmt->fetchAll(PDO::FETCH_ASSOC);;
       </div>
       <div class="container-cafe-manha-produtos">
         <?php
-        foreach ($produtoCafe as $produto) {
+        foreach ($dadosCafe as $produto) {
         ?>
           <div class="container-produto">
             <div class="container-foto">
-              <img src="<?= 'img/' . $produto['imagem']; ?>" />
+              <img src="<?= 'img/' . $produto->getImagem(); ?>" />
             </div>
-            <p><?= $produto['nome']; ?></p>
-            <p><?= $produto['descricao']; ?></p>
-            <p><?= 'R$ ' . $produto['preco']; ?></p>
+            <p><?= $produto->getNome(); ?></p>
+            <p><?= $produto->getDescricao(); ?></p>
+            <p><?= 'R$ ' . number_format($produto->getPreco(), 2); ?></p>
           </div>
         <?php
         }
@@ -67,15 +89,15 @@ $produtosAlmoco =  $stmt->fetchAll(PDO::FETCH_ASSOC);;
       </div>
       <div class="container-almoco-produtos">
         <?php
-        foreach ($produtosAlmoco as $produto) {
+        foreach ($dadosAlmoco as $produto) {
         ?>
           <div class="container-produto">
             <div class="container-foto">
-              <img src="<?= 'img/' .  $produto['imagem']; ?>" />
+              <img src="<?= 'img/' .  $produto->getImagem(); ?>" />
             </div>
-            <p><?= $produto['nome']; ?></p>
-            <p><?= $produto['descricao']; ?></p>
-            <p><?= 'R$ ' . $produto['preco']; ?></p>
+            <p><?= $produto->getNome(); ?></p>
+            <p><?= $produto->getDescricao(); ?></p>
+            <p><?= 'R$ ' . number_format($produto->getPreco(), 2); ?></p>
           </div>
         <?php
         }
