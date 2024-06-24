@@ -47,6 +47,11 @@ class Produto
     return $this->preco;
   }
 
+  public function getPrecoFormatado(): string
+  {
+    return 'R$ ' . number_format($this->preco, 2);
+  }
+
   public function setPreco($preco)
   {
     $this->preco = $preco;
@@ -75,6 +80,11 @@ class Produto
   public function getImagem()
   {
     return $this->imagem;
+  }
+
+  public function getCaminhoImagem()
+  {
+    return 'img/' . $this->imagem;
   }
 
   public function setImagem($imagem)

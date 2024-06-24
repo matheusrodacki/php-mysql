@@ -71,11 +71,11 @@ $dadosAlmoco = array_map(function ($almoco) {
         ?>
           <div class="container-produto">
             <div class="container-foto">
-              <img src="<?= 'img/' . $produto->getImagem(); ?>" />
+              <img src="<?= $produto->getCaminhoImagem(); ?>" />
             </div>
             <p><?= $produto->getNome(); ?></p>
             <p><?= $produto->getDescricao(); ?></p>
-            <p><?= 'R$ ' . number_format($produto->getPreco(), 2); ?></p>
+            <p><?= $produto->getPrecoFormatado(); ?></p>
           </div>
         <?php
         }
@@ -93,11 +93,11 @@ $dadosAlmoco = array_map(function ($almoco) {
         ?>
           <div class="container-produto">
             <div class="container-foto">
-              <img src="<?= 'img/' .  $produto->getImagem(); ?>" />
+              <img src="<?= $produto->getCaminhoImagem(); ?>" />
             </div>
             <p><?= $produto->getNome(); ?></p>
             <p><?= $produto->getDescricao(); ?></p>
-            <p><?= 'R$ ' . number_format($produto->getPreco(), 2); ?></p>
+            <p><?= $produto->getPrecoFormatado(); ?></p>
           </div>
         <?php
         }
