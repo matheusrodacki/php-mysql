@@ -13,7 +13,7 @@ if (isset($_POST['cadastro'])) {
         $_POST['preco']
     );
 
-    if ($_FILES['imagem']['name']) {
+    if ($_FILES['imagem']['error'] == UPLOAD_ERR_OK) {
         $produto->setImagem(uniqid() . '-' . $_FILES['imagem']['name']);
         move_uploaded_file($_FILES['imagem']['tmp_name'], $produto->getCaminhoImagem());
     }
