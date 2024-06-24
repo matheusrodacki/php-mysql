@@ -15,8 +15,8 @@ class ProdutoRepositorio
       $dados['tipo'],
       $dados['nome'],
       $dados['descricao'],
-      $dados['imagem'],
-      $dados['preco']
+      $dados['preco'],
+      $dados['imagem']
     );
   }
 
@@ -46,7 +46,7 @@ class ProdutoRepositorio
     return $dadosAlmoco;
   }
 
-  public function buncarTodos(): array
+  public function buscarTodos(): array
   {
     $sql = "SELECT * FROM produtos ORDER BY preco";
     $stmt = $this->pdo->query($sql);
@@ -64,6 +64,28 @@ class ProdutoRepositorio
     $sql = "DELETE FROM produtos WHERE id = :id";
     $stmt = $this->pdo->prepare($sql);
     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+  }
+
+  public function salvar(Produto $produto)
+  {
+    if ($produto->getId() === null) {
+      $sql = "INSERT INTO produtos (tipo, nome, descricao, preco, imagem) VALUES (:tipo, :nome, :descricao, :preco, :imagem)";
+    } else {
+      $sql = "UPDATE produtos SET tipo = :tipo, nome = :nome, descricao = :descricao, preco = :preco, imagem = :imagem WHERE id = :id";
+    }
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->bindValue(':tipo', $produto->getTipo(), PDO::PARAM_STR);
+    $stmt->bindValue(':nome', $produto->getNome(), PDO::PARAM_STR);
+    $stmt->bindValue(':descricao', $produto->getDescricao(), PDO::PARAM_STR);
+    $stmt->bindValue(':preco', $produto->getPreco(), PDO::PARAM_STR);
+    $stmt->bindValue(':imagem', $produto->getImagem(), PDO::PARAM_STR);
+
+    if ($produto->getId() !== null) {
+      $stmt->bindValue(':id', $produto->getId(), PDO::PARAM_INT);
+    }
+
     $stmt->execute();
   }
 }

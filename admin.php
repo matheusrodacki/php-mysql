@@ -5,7 +5,7 @@ require_once 'src/Model/Produto.php';
 require_once 'src/Repositorio/ProdutoRepositorio.php';
 
 $produtoRepositorio = new ProdutoRepositorio($pdo);
-$dadosProdutos = $produtoRepositorio->buncarTodos();
+$dadosProdutos = $produtoRepositorio->buscarTodos();
 ?>
 
 <!doctype html>
@@ -72,7 +72,7 @@ $dadosProdutos = $produtoRepositorio->buncarTodos();
           ?>
         </tbody>
       </table>
-      <a class="botao-cadastrar" href="cadastrar-produto.html">Cadastrar produto</a>
+      <a class="botao-cadastrar" href="cadastrar-produto.php">Cadastrar produto</a>
       <form action="#" method="post">
         <input type="submit" class="botao-cadastrar" value="Baixar Relatório" />
       </form>

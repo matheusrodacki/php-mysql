@@ -2,23 +2,11 @@
 
 class Produto
 {
-  // Propriedades da classe Produto
-  private  int $id;
-  private string $tipo;
-  private string $nome;
-  private string $descricao;
-  private string $imagem;
-  private float $preco;
+
 
   // Construtor da classe Produto
-  public function __construct($id, $tipo, $nome, $descricao, $imagem, $preco)
+  public function __construct(private ?int $id, private string $tipo, private string $nome, private string $descricao, private float $preco, private string $imagem = 'logo-serenatto.png')
   {
-    $this->id = $id;
-    $this->tipo = $tipo;
-    $this->nome = $nome;
-    $this->descricao = $descricao;
-    $this->imagem = $imagem;
-    $this->preco = $preco;
   }
 
   // Métodos getters e setters para as propriedades
