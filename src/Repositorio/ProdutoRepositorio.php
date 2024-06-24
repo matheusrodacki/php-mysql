@@ -59,6 +59,17 @@ class ProdutoRepositorio
     return $dadosProdutos;
   }
 
+  public function buscarProduto(int $id): Produto
+  {
+    $sql = "SELECT * FROM produtos WHERE id = :id";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    $produto = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $this->formarObjeto($produto);
+  }
+
   public function deletar(int $id): void
   {
     $sql = "DELETE FROM produtos WHERE id = :id";
