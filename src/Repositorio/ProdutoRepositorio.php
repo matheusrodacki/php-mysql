@@ -8,6 +8,18 @@ class ProdutoRepositorio
   {
   }
 
+  private function formarObjeto($dados)
+  {
+    return new Produto(
+      $dados['id'],
+      $dados['tipo'],
+      $dados['nome'],
+      $dados['descricao'],
+      $dados['imagem'],
+      $dados['preco']
+    );
+  }
+
   public function opcoesCafe(): array
   {
     $sql = "SELECT * FROM produtos WHERE tipo = 'Cafe' ORDER BY preco";
@@ -15,14 +27,7 @@ class ProdutoRepositorio
     $produtosCafe = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $dadosCafe = array_map(function ($cafe) {
-      return new Produto(
-        (int) $cafe['id'],
-        $cafe['tipo'],
-        $cafe['nome'],
-        $cafe['descricao'],
-        $cafe['imagem'],
-        (float) $cafe['preco']
-      );
+      return $this->formarObjeto($cafe);
     }, $produtosCafe);
 
     return $dadosCafe;
@@ -35,16 +40,22 @@ class ProdutoRepositorio
     $produtosAlmoco = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $dadosAlmoco = array_map(function ($almoco) {
-      return new Produto(
-        (int) $almoco['id'],
-        $almoco['tipo'],
-        $almoco['nome'],
-        $almoco['descricao'],
-        $almoco['imagem'],
-        (float) $almoco['preco']
-      );
+      return $this->formarObjeto($almoco);
     }, $produtosAlmoco);
 
     return $dadosAlmoco;
+  }
+
+  public function buncarTodos(): array
+  {
+    $sql = "SELECT * FROM produtos ORDER BY preco";
+    $stmt = $this->pdo->query($sql);
+    $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $dadosProdutos = array_map(function ($produto) {
+      return $this->formarObjeto($produto);
+    }, $produtos);
+
+    return $dadosProdutos;
   }
 }
